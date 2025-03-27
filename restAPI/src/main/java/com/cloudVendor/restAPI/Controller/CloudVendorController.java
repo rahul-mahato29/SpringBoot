@@ -5,12 +5,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/cloudvendor")
-public class CloudAPIService {
+public class CloudVendorController {
     CloudVendor cloudVendor;
 
     @GetMapping("{vendorId}")
     public CloudVendor getCloudVendorDetails(String vendorId){
-//        return new CloudVendor("C1", "Vendor1",
+//        return new CloudVendor("C1", "Vendo r1",
 //                "Address1", "xxxxxx");
 
         return cloudVendor;
