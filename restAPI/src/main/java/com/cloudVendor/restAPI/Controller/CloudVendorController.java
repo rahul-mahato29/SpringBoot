@@ -1,36 +1,45 @@
 package com.cloudVendor.restAPI.Controller;
 
 import com.cloudVendor.restAPI.Model.CloudVendor;
+import com.cloudVendor.restAPI.Service.CloudVendorService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/cloudvendor")
 public class CloudVendorController {
-    CloudVendor cloudVendor;
+    CloudVendorService cloudVendorService;
+
+    public CloudVendorController(CloudVendorService cloudVendorService) {
+        this.cloudVendorService = cloudVendorService;
+    }
 
     @GetMapping("{vendorId}")
-    public CloudVendor getCloudVendorDetails(String vendorId){
-//        return new CloudVendor("C1", "Vendo r1",
-//                "Address1", "xxxxxx");
+    public CloudVendor getCloudVendorDetails(@PathVariable("vendorId") String vendorId){
+        return cloudVendorService.getCloudVendor(vendorId);  //sending the get request to service layer to get the vendor details and then return through repository layer
+    }
 
-        return cloudVendor;
+    @GetMapping()
+    public List<CloudVendor> getAllCloudVendorDetails(){
+        return cloudVendorService.getAllCloudVendors();  //sending the get request to service layer to get the vendor details and then return through repository layer
     }
 
     @PostMapping
     public String createCloudVendorDetails(@RequestBody CloudVendor cloudVendor){
-        this.cloudVendor = cloudVendor;
+        cloudVendorService.createCloudVendor(cloudVendor);
         return "CloudVendor Created Successfully";
     }
 
     @PutMapping
     public String updateCloudVendorDetails(@RequestBody CloudVendor cloudVendor){
-        this.cloudVendor = cloudVendor;
+        cloudVendorService.updateCloudVendor(cloudVendor);
         return "CloudVendor Details Updated Successfully";
     }
 
-    @DeleteMapping
-    public String deleteCloudVendorDetails(){
-        this.cloudVendor = null;
+    @DeleteMapping("{vendorId}")
+    public String deleteCloudVendorDetails(@PathVariable("vendorId") String vendorId){
+        cloudVendorService.deleteCloudVendor(vendorId);
         return "CloudVendor Detail Deleted Successfully";
     }
 }
